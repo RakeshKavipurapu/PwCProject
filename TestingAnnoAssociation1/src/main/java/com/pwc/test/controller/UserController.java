@@ -15,6 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.bind.annotation.RestController;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
+import com.fasterxml.jackson.databind.JsonMappingException;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.gson.Gson;
 import com.pwc.test.entities.Order;
 import com.pwc.test.entities.User;
@@ -43,15 +46,23 @@ public class UserController {
 	 * object.
 	 */
 	@ResponseBody
-	public String saveData() {
+	public String saveData(@RequestBody String jsonData) throws JsonMappingException, JsonProcessingException {
 
 		// for sample project we are using only Order and User table
 
-		// populating the order table through order entity object
-		List<Order> ordersList = Arrays.asList(new Order(true, "spring-book"), new Order(true, "java-book"));
-
-		// populating the user table through user entity object
-		User user = new User("Ramesh", "Hyderabad", "ramesh1545@gmail.com", "rammish2345", ordersList);
+		/*
+		 * // populating the order table through order entity object List<Order>
+		 * ordersList = Arrays.asList(new Order(true, "spring-book"), new Order(true,
+		 * "java-book"));
+		 * 
+		 * // populating the user table through user entity object User user = new
+		 * User("Ramesh", "Hyderabad", "ramesh1545@gmail.com", "rammish2345",
+		 * ordersList);
+		 */
+		//To convert the jsondata to java object we need objectmapper
+		ObjectMapper objectmapper=new ObjectMapper();
+	    User user=	objectmapper.readValue(jsonData, User.class);
+		
 		// now the function call will be going to service layer
 		userservice.saveUserData(user);
 		// returning a simple status to the browser

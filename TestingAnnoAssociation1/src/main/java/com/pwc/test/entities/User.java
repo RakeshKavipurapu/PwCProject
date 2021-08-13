@@ -14,6 +14,7 @@ import javax.persistence.JoinColumn;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 
+import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.NonNull;
@@ -23,7 +24,7 @@ import lombok.RequiredArgsConstructor;
 //Data is used to generate setters,getters,toString method
 @NoArgsConstructor
 //generates a 0-param constructor
-
+@AllArgsConstructor
 @RequiredArgsConstructor
 /*
  * generates a parameterized constructor with properties having
